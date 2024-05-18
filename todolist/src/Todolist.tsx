@@ -1,8 +1,5 @@
 import React from "react";
 
-function sum(a: number, b: number) {
-    alert(a+b);
-}
 
 export type TaskType = {
     id: number
