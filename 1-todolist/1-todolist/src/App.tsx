@@ -17,7 +17,6 @@ import {TaskType, Todolist} from "./Todolist";
 
 function App() {
     const todolistTitle = "What to learn"
-
     let tasks1: Array<TaskType> = [
         {id:1, title: "CSS", isDone: true},
         {id:2, title: "JS", isDone: true},
@@ -26,10 +25,19 @@ function App() {
         {id:5, title: "TSX", isDone: false}
     ]
 
+    const todolistTitle_2 = "What to buy"
+    let tasks2: Array<TaskType> = [
+        // {id:1, title: "Water", isDone: true},
+        // {id:2, title: "Beer", isDone: true},
+        // {id:3, title: "Meat", isDone: false},
+        // {id:4, title: "Cheeps", isDone: true}
+    ]
+
     return (
         <div className="App">
             <Todolist title={todolistTitle} tasks={tasks1}/>
-            {/* Todolist({title: "What to learn"})*/}
+            {/* Todolist({title: "What to learn", tasks: tasks2})*/}
+            <Todolist title={todolistTitle_2} tasks={tasks2}/>
             {/*<Todolist title="What to buy"/>*/}
             {/*<Todolist title="What to read"/>*/}
         </div>
