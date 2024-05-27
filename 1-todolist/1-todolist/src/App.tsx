@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 
@@ -13,33 +13,49 @@ import {TaskType, Todolist} from "./Todolist";
 // VUI -> voice
 // VRUI -> виртуальная реальность
 // ARUI -> дополненная реальность
-
+export type FilterValuesType = "all" | "active" | "completed"
 
 function App() {
+    //DATA
     const todolistTitle = "What to learn"
-    let tasks1: Array<TaskType> = [
+
+    //global state
+    const [ tasks, setTasks] = useState<Array<TaskType>>([
         {id:1, title: "CSS", isDone: true},
         {id:2, title: "JS", isDone: true},
         {id:3, title: "React", isDone: false},
         {id:4, title: "Html", isDone: true},
         {id:5, title: "TSX", isDone: false}
-    ]
+    ])
 
-    const todolistTitle_2 = "What to buy"
-    let tasks2: Array<TaskType> = [
-        // {id:1, title: "Water", isDone: true},
-        // {id:2, title: "Beer", isDone: true},
-        // {id:3, title: "Meat", isDone: false},
-        // {id:4, title: "Cheeps", isDone: true}
-    ]
+    //State management => useState, useReducer, redux
+    const removeTask = (taskId: number) => {
+        //иммутабельная работа -> без измения данных первоночальных данных
+        const nextState = tasks.filter(t => t.id !== taskId) // new array
+        setTasks(nextState)
+        console.log(nextState)
+    }
+
+    //UI
+
+    const [filter, setFilter] = useState<FilterValuesType>("all")
+    // какие таски отдать в Todo на отрисовку? => см. filter
+
+    let filteredTasksForTodolist: Array<TaskType> = tasks
+    if (filter === "active") {
+        filteredTasksForTodolist = tasks.filter(t => t.isDone === false)
+    }
+    if (filter === "completed") {
+        filteredTasksForTodolist = tasks.filter(t => t.isDone)
+    }
+
+    const changeFilter = (newFilterValue: FilterValuesType) => {
+        setFilter(newFilterValue)
+    }
 
     return (
         <div className="App">
-            <Todolist title={todolistTitle} tasks={tasks1}/>
-            {/* Todolist({title: "What to learn", tasks: tasks2})*/}
-            <Todolist title={todolistTitle_2} tasks={tasks2}/>
-            {/*<Todolist title="What to buy"/>*/}
-            {/*<Todolist title="What to read"/>*/}
+            <Todolist title={todolistTitle} tasks={filteredTasksForTodolist} removeTask={removeTask} changeFilter={changeFilter}/>
         </div>
     );
 }
