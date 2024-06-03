@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
+import {v1} from "uuid";
 
 // Create
 // Read (view mode, filter, sort, search, page(по 10, 20 страниц показывать)
@@ -21,21 +22,38 @@ function App() {
 
     //global state
     const [ tasks, setTasks] = useState<Array<TaskType>>([
-        {id:1, title: "CSS", isDone: true},
-        {id:2, title: "JS", isDone: true},
-        {id:3, title: "React", isDone: false},
-        {id:4, title: "Html", isDone: true},
-        {id:5, title: "TSX", isDone: false}
+        {id: v1(), title: "CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "React", isDone: false},
+        {id: v1(), title: "Html", isDone: true},
+        {id: v1(), title: "TSX", isDone: false}
     ])
 
     //State management => useState, useReducer, redux
-    const removeTask = (taskId: number) => {
+    const removeTask = (taskId: string) => {
         //иммутабельная работа -> без измения данных первоночальных данных
         const nextState = tasks.filter(t => t.id !== taskId) // new array
         setTasks(nextState)
         console.log(nextState)
     }
 
+    const addTask = (title: string) => {
+        const newTask: TaskType = {
+            id: v1(),
+            title,
+            isDone: false
+        }
+
+        //иммутабильеная работа
+        // const copyState = [...tasks]
+        // copyState.push(newTask)
+        // setTasks(copyState)
+
+        // аналог строк выше
+        setTasks([newTask, ...tasks]) //такая запись добавит в конец массива новый элемент, если в начале то
+        // setTasks([newTask, ...tasks])
+
+    }
     //UI
 
     const [filter, setFilter] = useState<FilterValuesType>("all")
@@ -55,7 +73,12 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title={todolistTitle} tasks={filteredTasksForTodolist} removeTask={removeTask} changeFilter={changeFilter}/>
+            <Todolist title={todolistTitle}
+                      tasks={filteredTasksForTodolist}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+            />
         </div>
     );
 }
