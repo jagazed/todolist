@@ -29,14 +29,14 @@ export const Todolist = (
 
     const [taskTitle, setTaskTitle] = useState("")
 
-
     const tasksElements: Array<JSX.Element> | JSX.Element = tasks.length !== 0
     ? tasks.map((task: TaskType) => {
+        const removeTaskHandler = () => removeTask(task.id)
         return (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
-                <Button title={"x"} onClickHandler={() => removeTask(task.id)} />
+                <Button title={"x"} onClickHandler={removeTaskHandler} />
             </li>
         )
     })
@@ -52,22 +52,35 @@ export const Todolist = (
 
     const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && addTaskHandler()
 
+    const setAllTasksHandler = () => {
+        changeFilter("all")
+    }
+    const setActiveTasksHandler = () => {
+        changeFilter("active")
+    }
+    const setCompletedTasksHandler = () => {
+        changeFilter("completed")
+    }
+
+    const isAddTaskButtonDisabled = !Boolean(taskTitle.trim()) || taskTitle.length > 25
+    {/*можно написать {!taskTitle.trim()}*/}
+    const userTaskTitleLengthWarning =taskTitle.length > 15 && <div>Recommended task title is 15 charters </div>
+
     return (
         <div className="todolist">
         <h3>{title}</h3>
             <div>
                 <input value={taskTitle} onChange={changeTaskTitleHandler} onKeyDown={keyDownAddTaskHandler} />
-                <Button title={"+"} onClickHandler={addTaskHandler} disabled={!Boolean(taskTitle.trim())} />
-                    {/*можно написать {!taskTitle.trim()}*/}
-                {taskTitle.length > 15 && <div>Recommended task title is 15 charters </div>}
+                <Button title={"+"} onClickHandler={addTaskHandler} disabled={isAddTaskButtonDisabled} />
+                {userTaskTitleLengthWarning}
             </div>
             <ul>
                 {tasksElements}
             </ul>
             <div>
-                <Button onClickHandler={() => changeFilter("all")} title={"All"}/>
-                <Button onClickHandler={() => changeFilter("active")} title={"Active"}/>
-                <Button onClickHandler={() => changeFilter("completed")} title={"completed"}/>
+                <Button onClickHandler={setAllTasksHandler} title={"All"}/>
+                <Button onClickHandler={setActiveTasksHandler} title={"Active"}/>
+                <Button onClickHandler={setCompletedTasksHandler} title={"completed"}/>
             </div>
         </div>
     )
