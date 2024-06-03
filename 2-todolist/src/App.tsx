@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 
+
 export type FilterValuesType = "all" | "active" | "completed" | "threeTasks";
 
 //Hi guys!
@@ -33,6 +34,7 @@ function App() {
         {id: 4, title: "Rest API", isDone: false},
         {id: 5, title: "GraphQL", isDone: false},
     ]);
+
     function removeTask(id: number) {
         let filteredTasks = tasks.filter(t => t.id != id);
         setTasks(filteredTasks);
@@ -41,6 +43,8 @@ function App() {
     const removeAllTasks = () => {
         setTasks([]);
     }
+
+    //const changeFilter2 = changeFilter();
 
     // let [filter, setFilter] = useState<FilterValuesType>("all");
     //
@@ -61,31 +65,31 @@ function App() {
     //     setFilter(value);
     // }
 
-    let [filter, setFilter] = useState<FilterValuesType>("all");
+    //let [filter, setFilter] = useState<FilterValuesType>("all");
 
-    let tasksForTodolist = tasks;
+    //let tasksForTodolist = tasks;
 
-    if (filter === "active") {
-        tasksForTodolist = tasks.filter(t => t.isDone === false);
-    }
-    if (filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.isDone === true);
-    }
+    // if (filter === "active") {
+    //     tasksForTodolist = tasks.filter(t => t.isDone === false);
+    // }
+    // if (filter === "completed") {
+    //     tasksForTodolist = tasks.filter(t => t.isDone === true);
+    // }
+    //
+    // if (filter === "threeTasks") {
+    //     tasksForTodolist = tasks.slice(0,3);
+    // }
 
-    if (filter === "threeTasks") {
-        tasksForTodolist = tasks.slice(0,3);
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
-    }
+    // function changeFilter(value: FilterValuesType) {
+    //     setFilter(value);
+    // }
 
     return (
         <div className="App">
             <Todolist title="What to learn"
-                      tasks={tasksForTodolist}
+                      tasks={tasks}
                       removeTask={removeTask}
-                      changeFilter={changeFilter}
+                      //changeFilter={changeFilter}
                       removeAllTasks={removeAllTasks}/>
         </div>
     );
