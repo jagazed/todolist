@@ -31,11 +31,20 @@ export type FilterValuesType = "all" | "completed" | "active";
         let newTasks = [newTask, ...tasks];
         setTasks(newTasks);
     }
+
+    function changeStatus (taskId: string, isDone: boolean) {
+        let task = tasks.find( t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone;
+        }
+        setTasks([...tasks]);
+    }
+
     function changeFilter(value: FilterValuesType ){
         setFilter(value);
     }
 
-     let [filter, setFilter] = useState<FilterValuesType>("all")
+    let [filter, setFilter] = useState<FilterValuesType>("all")
 
     let taskForTodolist = tasks;
 
@@ -52,7 +61,10 @@ export type FilterValuesType = "all" | "completed" | "active";
                       tasks={taskForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
-                      addTask={addTask} />
+                      addTask={addTask}
+                      changeTaskStatus={changeStatus}
+                      filter={filter}
+            />
         </div>
     );
 }
