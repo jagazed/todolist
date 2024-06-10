@@ -13,3 +13,22 @@
   border-radius: 5px;
   padding: 15px;
 }
+
+.task-done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.task {
+  font-weight: bold;
+}
+
+.active {
+  background-color: lightgreen;
+}
+
+.taskInputError {
+  color: red;
+  border: 2px solid red;
+  outline: red;
+}

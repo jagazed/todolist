@@ -32,7 +32,7 @@ function App() {
     //State management => useState, useReducer, redux
     const removeTask = (taskId: string) => {
         //иммутабельная работа -> без измения данных первоночальных данных
-        const nextState = tasks.filter(t => t.id !== taskId) // new array
+        const nextState: Array<TaskType> = tasks.filter(t => t.id !== taskId) // new array
         setTasks(nextState)
         console.log(nextState)
     }
@@ -43,19 +43,19 @@ function App() {
             title,
             isDone: false
         }
-
         //иммутабильеная работа
         // const copyState = [...tasks]
         // copyState.push(newTask)
         // setTasks(copyState)
-
         // аналог строк выше
         setTasks([newTask, ...tasks]) //такая запись добавит в конец массива новый элемент, если в начале то
         // setTasks([newTask, ...tasks])
-
+    }
+    const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
+        const nextState: Array<TaskType> = tasks.map(t => t.id === taskId ? {...t, isDone: newIsDoneValue} : t)
+        setTasks(nextState)
     }
     //UI
-
     const [filter, setFilter] = useState<FilterValuesType>("all")
     // какие таски отдать в Todo на отрисовку? => см. filter
 
@@ -75,8 +75,10 @@ function App() {
         <div className="App">
             <Todolist title={todolistTitle}
                       tasks={filteredTasksForTodolist}
+                      filter={filter}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
+                      changeTaskStatus={changeTaskStatus}
                       addTask={addTask}
             />
         </div>
