@@ -23,7 +23,7 @@ function App() {
         let tasks = tasksObj[todolistId];
         let filteredTasks = tasks.filter(t => t.id !== id);
         tasksObj[todolistId] = filteredTasks;
-        settasks({...tasksObj});
+        setTasks({...tasksObj});
     }
 
     function addTask(title: string, todolistId: string) {
@@ -31,7 +31,7 @@ function App() {
         let tasks = tasksObj[todolistId];
         let newTasks = [newTask, ...tasks];
         tasksObj[todolistId] = newTasks;
-        settasks({...tasksObj});
+        setTasks({...tasksObj});
     }
 
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
@@ -39,7 +39,7 @@ function App() {
         let task = tasks.find(t => t.id === taskId);
         if (task) {
             task.isDone = isDone;
-            settasks({...tasksObj});
+            setTasks({...tasksObj});
         }
     }
 
@@ -59,7 +59,14 @@ function App() {
         {id: todolistId2, title: "What to buy", filter: "completed"}
     ])
 
-    let [tasksObj, settasks] = useState({
+    let removeTodolist = (todolistId: string) => {
+        let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
+        setTodolists(filteredTodolist);
+        delete tasksObj[todolistId]; //функция react для удаления массива
+        setTasks({...tasksObj})
+    }
+
+    let [tasksObj, setTasks] = useState({
         [todolistId1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -95,6 +102,7 @@ function App() {
                         addTask={addTask}
                         changeTaskStatus={changeStatus}
                         filter={tl.filter}
+                        removeTodolist={removeTodolist}
                     />
                 })
             }
