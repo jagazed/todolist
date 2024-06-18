@@ -35,7 +35,7 @@ export const Todolist = (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
-                <Button title={"x"} onClickHandler={() => removeTask(task.id)} />
+                {/*<Button title={"x"} onClickHandler={() => removeTask(task.id)} />*/}
             </li>
         )
     })
@@ -56,15 +56,15 @@ export const Todolist = (
         <h3>{title}</h3>
             <div>
                 <input ref ={taskInputRef} />
-                <Button title={"+"} onClickHandler={addTaskHandler} />
+                {/*<Button title={"+"} onClickHandler={addTaskHandler} />*/}
             </div>
             <ul>
                 {tasksElements}
             </ul>
             <div>
-                <Button onClickHandler={() => changeFilter("all")} title={"All"}/>
-                <Button onClickHandler={() => changeFilter("active")} title={"Active"}/>
-                <Button onClickHandler={() => changeFilter("completed")} title={"completed"}/>
+                {/*<Button onClickHandler={() => changeFilter("all")} title={"All"}/>*/}
+                {/*<Button onClickHandler={() => changeFilter("active")} title={"Active"}/>*/}
+                {/*<Button onClickHandler={() => changeFilter("completed")} title={"completed"}/>*/}
             </div>
         </div>
     )

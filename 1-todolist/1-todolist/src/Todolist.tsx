@@ -3,24 +3,27 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./Button";
 
 type PropsType = {
+	filter: FilterValuesType
+	todolistId: string
 	title: string
 	tasks: TaskType[]
-	removeTask: (taskId: string) => void
-	changeFilter: (filter: FilterValuesType) => void
-	addTask: (title: string) => void
-	changeTaskStatus: (taskId: string, taskStatus: boolean) => void
-	filter: FilterValuesType
+
+	removeTask: (taskId: string, todolistId: string) => void
+	changeTodolistFilter: (filter: FilterValuesType, todolistId: string) => void
+	addTask: (title: string, todolistId: string) => void
+	changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
+	removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = (props: PropsType) => {
-	const {title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
+	const {todolistId, removeTodolist, title, tasks, filter, removeTask, changeTodolistFilter, addTask, changeTaskStatus} = props
 
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
 
 	const addTaskHandler = () => {
 		if (taskTitle.trim() !== '') {
-			addTask(taskTitle.trim())
+			addTask(taskTitle.trim(), todolistId)
 			setTaskTitle('')
 		} else {
 			setError('Title is required')
@@ -39,12 +42,15 @@ export const Todolist = (props: PropsType) => {
 	}
 
 	const changeFilterTasksHandler = (filter: FilterValuesType) => {
-		changeFilter(filter)
+		changeTodolistFilter(filter, todolistId)
 	}
 
 	return (
 		<div>
-			<h3>{title}</h3>
+			<h3>
+				{title} &nbsp;
+				<button onClick={()=> removeTodolist(todolistId)}>x</button>
+			</h3>
 			<div>
 				<input
 					className={error ? 'error': ''}
@@ -62,12 +68,12 @@ export const Todolist = (props: PropsType) => {
 						{tasks.map((task) => {
 
 							const removeTaskHandler = () => {
-								removeTask(task.id)
+								removeTask(task.id, todolistId)
 							}
 
 							const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
 								const newStatusValue = e.currentTarget.checked
-								changeTaskStatus(task.id, newStatusValue)
+								changeTaskStatus(task.id, newStatusValue, todolistId)
 							}
 
 							return <li key={task.id} className={task.isDone ? 'is-done' : ''}>
