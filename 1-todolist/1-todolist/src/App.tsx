@@ -1,88 +1,74 @@
-import React, {useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from "./Todolist";
+import {Todolist} from "./Todolist";
+import {useState} from "react";
 import {v1} from "uuid";
 
-// Create
-// Read (view mode, filter, sort, search, page(по 10, 20 страниц показывать)
-// Update
-// Delete
-// CRUD операции -> данные непрерывно меняются
+export type TaskType = {
+	id: string
+	title: string
+	isDone: boolean
+}
 
-// CLI -> командная строка
-// GUI -> Graphic user interface -> мы такое делаем
-// VUI -> voice
-// VRUI -> виртуальная реальность
-// ARUI -> дополненная реальность
-export type FilterValuesType = "all" | "active" | "completed"
+export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
-    //DATA
-    const todolistTitle = "What to learn"
 
-    //global state
-    const [ tasks, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "Html", isDone: true},
-        {id: v1(), title: "TSX", isDone: false}
-    ])
+	const [tasks, setTasks] = useState<TaskType[]>([
+		{id: v1(), title: 'HTML&CSS', isDone: true},
+		{id: v1(), title: 'JS', isDone: true},
+		{id: v1(), title: 'ReactJS', isDone: false},
+	])
 
-    //State management => useState, useReducer, redux
-    const removeTask = (taskId: string) => {
-        //иммутабельная работа -> без измения данных первоночальных данных
-        const nextState: Array<TaskType> = tasks.filter(t => t.id !== taskId) // new array
-        setTasks(nextState)
-        console.log(nextState)
-    }
+	const [filter, setFilter] = useState<FilterValuesType>('all')
 
-    const addTask = (title: string) => {
-        const newTask: TaskType = {
-            id: v1(),
-            title,
-            isDone: false
-        }
-        //иммутабильеная работа
-        // const copyState = [...tasks]
-        // copyState.push(newTask)
-        // setTasks(copyState)
-        // аналог строк выше
-        setTasks([newTask, ...tasks]) //такая запись добавит в конец массива новый элемент, если в начале то
-        // setTasks([newTask, ...tasks])
-    }
-    const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
-        const nextState: Array<TaskType> = tasks.map(t => t.id === taskId ? {...t, isDone: newIsDoneValue} : t)
-        setTasks(nextState)
-    }
-    //UI
-    const [filter, setFilter] = useState<FilterValuesType>("all")
-    // какие таски отдать в Todo на отрисовку? => см. filter
+	const removeTask = (taskId: string) => {
+		const filteredTasks = tasks.filter((task) => {
+			return task.id !== taskId
+		})
+		setTasks(filteredTasks)
+	}
 
-    let filteredTasksForTodolist: Array<TaskType> = tasks
-    if (filter === "active") {
-        filteredTasksForTodolist = tasks.filter(t => t.isDone === false)
-    }
-    if (filter === "completed") {
-        filteredTasksForTodolist = tasks.filter(t => t.isDone)
-    }
+	const addTask = (title: string) => {
+		const newTask = {
+			id: v1(),
+			title: title,
+			isDone: false
+		}
+		const newTasks = [newTask, ...tasks]
+		setTasks(newTasks)
+	}
 
-    const changeFilter = (newFilterValue: FilterValuesType) => {
-        setFilter(newFilterValue)
-    }
+	const changeFilter = (filter: FilterValuesType) => {
+		setFilter(filter)
+	}
 
-    return (
-        <div className="App">
-            <Todolist title={todolistTitle}
-                      tasks={filteredTasksForTodolist}
-                      filter={filter}
-                      removeTask={removeTask}
-                      changeFilter={changeFilter}
-                      changeTaskStatus={changeTaskStatus}
-                      addTask={addTask}
-            />
-        </div>
-    );
+	const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
+		const newState = tasks.map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
+		setTasks(newState)
+	}
+
+	let tasksForTodolist = tasks
+	if (filter === 'active') {
+		tasksForTodolist = tasks.filter(task => !task.isDone)
+	}
+
+	if (filter === 'completed') {
+		tasksForTodolist = tasks.filter(task => task.isDone)
+	}
+
+	return (
+		<div className="App">
+			<Todolist
+				title="What to learn"
+				tasks={tasksForTodolist}
+				removeTask={removeTask}
+				changeFilter={changeFilter}
+				addTask={addTask}
+				changeTaskStatus={changeTaskStatus}
+				filter={filter}
+			/>
+		</div>
+	);
 }
 
 export default App;
