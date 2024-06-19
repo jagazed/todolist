@@ -106,8 +106,6 @@ function App() {
     }
 
     // UI
-
-
     const todolistsElements = todolists.map(tl => {
         let tasksForTodolist = tasks[tl.id]
         if (tl.filter === 'active') {
