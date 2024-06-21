@@ -4,14 +4,6 @@ import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 
-// function useState2(data: any) {
-//     return [ data, ()=> {}];
-// }
-// // eslint-disable-next-line react-hooks/rules-of-hooks
-// let arr = useState2([{}, {}, {}]);
-// let tasks = arr[0];
-// let setTasks = arr[1];
-
 export type FilterValuesType = "all" | "completed" | "active";
 type TodolistType = {
     id: string
@@ -44,6 +36,15 @@ function App() {
         let task = tasks.find(t => t.id === taskId);
         if (task) {
             task.isDone = isDone;
+            setTasks({...tasksObj});
+        }
+    }
+
+    function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+        let tasks = tasksObj[todolistId];
+        let task = tasks.find(t => t.id === taskId);
+        if (task) {
+            task.title = newTitle;
             setTasks({...tasksObj});
         }
     }
@@ -120,6 +121,7 @@ function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeTaskStatus={changeStatus}
+                        changeTaskTitle={changeTaskTitle}
                         filter={tl.filter}
                         removeTodolist={removeTodolist}
                     />
