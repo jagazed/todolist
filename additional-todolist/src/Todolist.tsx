@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterValuesType, todolistsType} from './App';
+import {FilterValuesType} from './App';
 
 type TaskType = {
     id: string
