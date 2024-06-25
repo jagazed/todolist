@@ -1,16 +1,17 @@
-import React, {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useState} from "react";
+
 
 type Props = {
     oldTitle: string
-    updateItem: (newTitle: string ) => void
-}
-export const EditableSpan = ({oldTitle, updateItem}: Props) => {
+    updateItem:(newTitle:string)=>void
+};
+export const EditableSpan = ({oldTitle,updateItem}: Props) => {
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState(oldTitle)
 
-    const activateEditModeHandler = () => {
+    const activateEditModeHandler=()=>{
         setEditMode(!editMode)
-        if (editMode) {
+        if(editMode){
             addItemHandler()
         }
 
@@ -25,13 +26,16 @@ export const EditableSpan = ({oldTitle, updateItem}: Props) => {
     }
 
     return (
+
         editMode
-            ? <input
-                type="text"
-                onBlur={activateEditModeHandler}
+            ?<input
                 onChange={changeTitleHandler}
+                type="text"
                 value={newTitle}
+                onBlur={activateEditModeHandler}
                 autoFocus/>
-            : <span onDoubleClick={activateEditModeHandler} >{oldTitle}</span>
+            : <span
+                onDoubleClick={activateEditModeHandler }>{oldTitle}</span>
+
     );
 };

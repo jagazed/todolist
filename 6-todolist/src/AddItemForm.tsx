@@ -1,10 +1,10 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Button} from "./Button";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
-    addItem: (title: string) => void
-}
-export const AddItemForm = ({addItem} : Props) => {
+    addItem:(title: string)=>void
+ };
+export const AddItemForm = ({addItem}: Props) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -28,17 +28,18 @@ export const AddItemForm = ({addItem} : Props) => {
         }
     }
 
-    return (
-        <div>
-            <input
-                className={error ? 'error' : ''}
-                value={taskTitle}
-                onChange={changeTaskTitleHandler}
-                onKeyUp={addItemOnKeyUpHandler}
-            />
-            <Button title={'+'} onClick={addItemHandler}/>
-            {error && <div className={'error-message'}>{error}</div>}
-        </div>
-    );
-};
 
+
+        return (
+            <div>
+                <input
+                    className={error ? 'error' : ''}
+                    value={taskTitle}
+                    onChange={changeTaskTitleHandler}
+                    onKeyUp={addItemOnKeyUpHandler}
+                />
+                <Button title={'+'} onClick={addItemHandler}/>
+                {error && <div className={'error-message'}>{error}</div>}
+            </div>
+        );
+};
