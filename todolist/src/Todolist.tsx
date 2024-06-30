@@ -48,7 +48,7 @@ export function Todolist(props: PropsType) {
                     <Delete fontSize="small"/>
                 </IconButton></h3>
             <AddItemForm addItem={addTask} />
-            <ul>
+            <div>
                 {
                     props.tasks.map((t) => {
                         const onRemoveHandler = () => {props.removeTask(t.id, props.id)}
@@ -59,7 +59,7 @@ export function Todolist(props: PropsType) {
                             props.changeTaskTitle(t.id, newValue, props.id)
                         }
                         return (
-                            <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                            <div key={t.id} className={t.isDone ? "is-done" : ""}>
                                 <Checkbox
                                        checked={t.isDone}
                                        onChange={onChangeStatusHandler}
@@ -68,11 +68,11 @@ export function Todolist(props: PropsType) {
                                 <IconButton aria-label="delete" size="small" onClick={onRemoveHandler}>
                                     <Delete fontSize="inherit"/>
                                 </IconButton>
-                            </li>
+                            </div>
                         )
                     })
                 }
-            </ul>
+            </div>
             <div>
                 <Button variant={props.filter === 'all' ? "contained" : "text"} onClick={onAllClickHandler}>ALL</Button>
                 <Button color={"primary"} variant={props.filter === 'active' ? "contained" : "text"} onClick={onActiveClickHandler}>Active</Button>
