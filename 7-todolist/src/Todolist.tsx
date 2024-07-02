@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import {ButtonGroup} from "@mui/material";
+import {filterButtonsContainerSx, getListItemSx} from "./Todolist.styles";
 
 
 
@@ -90,25 +92,31 @@ export const Todolist = (props: PropsType) => {
 								updateTask(todolistId, task.id, title)
 							}
 
-							return <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
+							return <ListItem
+								sx={getListItemSx(task.isDone)}
+								key={task.id} className={task.isDone ? 'is-done' : ''}>
 								{/*<input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>*/}
-								<Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
-								<EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+								<div>
+									<Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
+									<EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+								</div>
 								{/*<Button onClick={removeTaskHandler} title={'x'}/>*/}
 								<IconButton aria-label="delete" size="small" onClick={removeTaskHandler}>
-									<DeleteIcon fontSize="inherit" />
+									<DeleteIcon fontSize="inherit"/>
 								</IconButton>
 							</ListItem>
 						})}
 					</List>
 			}
 			<div>
+				<ButtonGroup sx={filterButtonsContainerSx}>
 				<Button variant={filter === 'all' ? 'outlined' : 'contained'} color="error"
 				        onClick={() => changeFilterTasksHandler('all')}>All</Button>
 				<Button variant={filter === 'active' ? 'outlined' : 'contained'}  color="primary"
 						onClick={() => changeFilterTasksHandler('active')}>Active</Button>
 				<Button variant={filter === 'completed' ? 'outlined' : 'contained'} color="secondary"
 						onClick={() => changeFilterTasksHandler('completed')}>Completed</Button>
+				</ButtonGroup>
 			</div>
 		</div>
 	)
