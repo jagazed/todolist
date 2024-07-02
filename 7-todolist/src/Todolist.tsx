@@ -6,6 +6,12 @@ import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+
+
+
 
 
 type PropsType = {
@@ -55,19 +61,20 @@ export const Todolist = (props: PropsType) => {
 
 	return (
 		<div>
-			<div className={"todolist-title-container"}>
-				<h3><EditableSpan value={title} onChange={updateTodolistHandler}/></h3>
-				{/*<Button title={'x'} />*/}
-				<IconButton aria-label="delete" size="small" onClick={removeTodolistHandler}>
-					<DeleteIcon fontSize="small" />
-				</IconButton>
-
-			</div>
+            <div className={"todolist-title-container"}>
+                <h3>
+                    <EditableSpan value={title} onChange={updateTodolistHandler}/>
+                    {/*<Button title={'x'} />*/}
+                    <IconButton aria-label="delete" size="small" onClick={removeTodolistHandler}>
+                        <DeleteIcon fontSize="small"/>
+                    </IconButton>
+                </h3>
+            </div>
 			<AddItemForm addItem={addTaskCallback}/>
 			{
 				tasks.length === 0
 					? <p>Тасок нет</p>
-					: <ul>
+					: <List>
 						{tasks.map((task) => {
 
 							const removeTaskHandler = () => {
@@ -83,16 +90,17 @@ export const Todolist = (props: PropsType) => {
 								updateTask(todolistId, task.id, title)
 							}
 
-							return <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-								<input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+							return <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
+								{/*<input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>*/}
+								<Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
 								<EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
 								{/*<Button onClick={removeTaskHandler} title={'x'}/>*/}
 								<IconButton aria-label="delete" size="small" onClick={removeTaskHandler}>
 									<DeleteIcon fontSize="inherit" />
 								</IconButton>
-							</li>
+							</ListItem>
 						})}
-					</ul>
+					</List>
 			}
 			<div>
 				<Button variant={filter === 'all' ? 'outlined' : 'contained'} color="error"
