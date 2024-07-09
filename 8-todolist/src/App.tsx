@@ -23,7 +23,7 @@ export type TaskType = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type TodolistType = {
+export type TodolistType = {
 	id: string
 	title: string
 	filter: FilterValuesType
@@ -36,7 +36,8 @@ export type TasksStateType = {
 type ThemeMode = 'dark' | 'light'
 
 function App() {
-
+	//BLL:
+	//Global states:
 	let todolistID1 = v1()
 	let todolistID2 = v1()
 
@@ -57,21 +58,7 @@ function App() {
 		],
 	})
 
-	const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-
-	const theme = createTheme({
-		palette: {
-			mode: themeMode === 'light' ? 'light' : 'dark',
-			primary: {
-				main: '#087EA4',
-			},
-		},
-	});
-
-	const removeTask = (taskId: string, todolistId: string) => {
-		const newTodolistTasks = {...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)}
-		setTasks(newTodolistTasks)
-	}
+	//CRUD tasks:
 
 	const addTask = (title: string, todolistId: string) => {
 		const newTask = {
@@ -80,6 +67,17 @@ function App() {
 			isDone: false
 		}
 		const newTodolistTasks = {...tasks, [todolistId]: [newTask, ...tasks[todolistId]]}
+		setTasks(newTodolistTasks)
+	}
+	const updateTask = (todolistId: string, taskId: string, title: string) => {
+		const newTodolistTasks = {
+			...tasks,
+			[todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)
+		}
+		setTasks(newTodolistTasks)
+	}
+	const removeTask = (taskId: string, todolistId: string) => {
+		const newTodolistTasks = {...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)}
 		setTasks(newTodolistTasks)
 	}
 
@@ -91,13 +89,24 @@ function App() {
 		setTasks(newTodolistTasks)
 	}
 
+	//CRUD todolist:
+
+	const addTodolist = (title: string) => {
+		const todolistId = v1()
+		const newTodolist: TodolistType = {id: todolistId, title: title, filter: 'all'}
+		setTodolists([newTodolist, ...todolists])
+		setTasks({...tasks, [todolistId]: []})
+	}
 	const changeFilter = (filter: FilterValuesType, todolistId: string) => {
 		const newTodolists = todolists.map(tl => {
 			return tl.id === todolistId ? {...tl, filter} : tl
 		})
 		setTodolists(newTodolists)
 	}
-
+	const updateTodolist = (todolistId: string, title: string) => {
+		const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl)
+		setTodolists(newTodolists)
+	}
 	const removeTodolist = (todolistId: string) => {
 		const newTodolists = todolists.filter(tl => tl.id !== todolistId)
 		setTodolists(newTodolists)
@@ -106,26 +115,17 @@ function App() {
 		setTasks({...tasks})
 	}
 
-	const addTodolist = (title: string) => {
-		const todolistId = v1()
-		const newTodolist: TodolistType = {id: todolistId, title: title, filter: 'all'}
-		setTodolists([newTodolist, ...todolists])
-		setTasks({...tasks, [todolistId]: []})
-	}
+	//UI
+	const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
-	const updateTask = (todolistId: string, taskId: string, title: string) => {
-		const newTodolistTasks = {
-			...tasks,
-			[todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)
-		}
-		setTasks(newTodolistTasks)
-	}
-
-	const updateTodolist = (todolistId: string, title: string) => {
-		const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl)
-		setTodolists(newTodolists)
-	}
-
+	const theme = createTheme({
+		palette: {
+			mode: themeMode === 'light' ? 'light' : 'dark',
+			primary: {
+				main: '#087EA4',
+			},
+		},
+	});
 	const changeModeHandler = () => {
 		setThemeMode(themeMode == "light" ? "dark" : 'light')
 	}
