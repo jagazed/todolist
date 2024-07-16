@@ -43,7 +43,8 @@ test('correct todolist should be added', () => {
         type: 'ADD-TODOLIST',
         payload: {
             title: 'New Todolist',
-        },
+            todolistId: v1()
+        }
     }
     const endState = todolistsReducer(startState, action)
 
