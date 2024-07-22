@@ -21,11 +21,10 @@ export type ChangeTaskStatusActionType = {
 }
 export type ChangeTaskTitleActionType = {
     type: 'CHANGE-TASK-TITLE'
-    taskId: string
     todolistId: string
+    taskId: string
     title: string
 }
-
 // export type ChangeTodolistTitleActionType = {
 //     type: 'CHANGE-TODOLIST-TITLE'
 //     payload: {
@@ -96,6 +95,6 @@ export const addTaskAC = (title: string, todolistId: string): AddTaskActionType 
 export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string): ChangeTaskStatusActionType => {
     return { type: 'CHANGE-TASK-STATUS', taskId, isDone, todolistId}
 }
-export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string): ChangeTaskTitleActionType => {
+export const changeTaskTitleAC = (todolistId: string, taskId: string, title: string): ChangeTaskTitleActionType => {
     return { type: 'CHANGE-TASK-TITLE', taskId, title, todolistId}
 }
