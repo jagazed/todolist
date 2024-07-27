@@ -1,12 +1,13 @@
 import {Button} from "./Button";
-import {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 
 type PropsType = {
 	addItem: (title:string) => void
 }
 
-export const AddItemForm = ({addItem}: PropsType) => {
+export const AddItemForm = React.memo(({addItem}: PropsType) => {
+	console.log("AddItemForm is called")
 
 	const [title, setTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -25,7 +26,9 @@ export const AddItemForm = ({addItem}: PropsType) => {
 	}
 
 	const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-		setError(null)
+		if (error !== null){
+			setError(null)
+		}
 		if (event.key === 'Enter') {
 			addItemHandler()
 		}
@@ -42,6 +45,6 @@ export const AddItemForm = ({addItem}: PropsType) => {
 			{error && <div className={'error-message'}>{error}</div>}
 		</div>
 	)
-}
+});
 
 

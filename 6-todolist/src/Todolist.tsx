@@ -1,5 +1,5 @@
 import {FilterValuesType, TaskType} from "./App";
-import {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {Button} from "./Button";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -22,7 +22,9 @@ type PropsType = {
 	updateTodolist: (todolistId: string, title: string) => void
 }
 
-export const Todolist = (props: PropsType) => {
+export const Todolist = React.memo(function (props: PropsType) {
+	console.log("Todolist is called")
+
 	const {
 		title,
 		filter,
@@ -35,25 +37,28 @@ export const Todolist = (props: PropsType) => {
 	const tasks = useSelector<AppRootState, Array<TaskType>>( state => state.tasks[props.todolistId] )
 	const dispatch = useDispatch()
 
+	const AddTask = useCallback((title: string) => {
+		dispatch(addTaskAC(title, props.todolistId))
+	} , [])
 	// const updateTask = (todolistId: string, taskId: string, title: string) => {
 	// 	dispatch(changeTaskTitleAC(todolistId, taskId, title))
 	// }
 
-	const changeFilterTasksHandler = (filter: FilterValuesType) => {
+	const changeFilterTasksHandler = useCallback((filter: FilterValuesType) => {
 		changeFilter(filter, props.todolistId)
-	}
+	}, [])
 
-	const removeTodolistHandler = () => {
+	const removeTodolistHandler = useCallback(() => {
 		removeTodolist(todolistId)
-	}
+	},[])
 
 	// const addTaskCallback = (title: string) => {
 	// 	dispatch(addTaskAC(title, todolistId));
 	// }
 
-	const updateTodolistHandler = (title: string) => {
+	const updateTodolistHandler = useCallback((title: string) => {
 		updateTodolist(props.todolistId, title)
-	}
+	},[])
 
 	let allTodolistTasks = tasks
 	let tasksForTodolist = allTodolistTasks
@@ -72,7 +77,7 @@ export const Todolist = (props: PropsType) => {
 				<h3><EditableSpan value={title} onChange={updateTodolistHandler}/></h3>
 				<Button title={'x'} onClick={removeTodolistHandler}/>
 			</div>
-			<AddItemForm addItem={(title) => dispatch(addTaskAC(title, props.todolistId))}/>
+			<AddItemForm addItem={AddTask}/>
 			{
 				tasksForTodolist.length === 0
 					? <p>Тасок нет</p>
@@ -114,4 +119,4 @@ export const Todolist = (props: PropsType) => {
 			</div>
 		</div>
 	)
-}
+})
