@@ -1,11 +1,12 @@
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 
 type PropsType = {
 	value: string
 	onChange: (newTitle: string) => void
 };
 
-export const EditableSpan = ({value, onChange}: PropsType) => {
+export const EditableSpan = React.memo(({value, onChange}: PropsType) => {
+	console.log("EditableSpan")
 	const [editMode, setEditMode] = useState(false)
 	const [title, setTitle] = useState(value)
 
@@ -30,4 +31,4 @@ export const EditableSpan = ({value, onChange}: PropsType) => {
 			}
 		</>
 	);
-};
+});
