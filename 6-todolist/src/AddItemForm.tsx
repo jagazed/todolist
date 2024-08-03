@@ -41,6 +41,7 @@ export const AddItemForm = React.memo(({addItem}: PropsType) => {
 				onChange={changeItemHandler}
 				onKeyUp={addItemOnKeyUpHandler}
 			/>
+
 			<Button title={'+'} onClick={addItemHandler}/>
 			{error && <div className={'error-message'}>{error}</div>}
 		</div>

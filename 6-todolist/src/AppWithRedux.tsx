@@ -29,8 +29,9 @@ export type TasksStateType = {
 	[key: string]: TaskType[]
 }
 
-function AppWithRedux(callback: T, deps: React.DependencyList) {
-	console.log("app is called ")
+function AppWithRedux() {
+	//function AppWithRedux(callback: T, deps: React.DependencyList) { не знаю откуда эти штуки появились
+
 	const dispatch = useDispatch()
 	const todolists = useSelector<AppRootState, Array<TodolistType>>( state => state.todolists )
 
