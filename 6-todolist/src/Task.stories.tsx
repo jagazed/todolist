@@ -1,10 +1,14 @@
 import {action} from '@storybook/addon-actions'
 import {Task} from "./Task";
 import React from "react";
+import {Provider} from "react-redux";
+import {store} from "./state/store";
+import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";
 
 export default {
 	title: "Task Component",
-	component: Task
+	component: Task,
+	decorators: [ReduxStoreProviderDecorator]
 }
 
 const removeTodolistCallback = action("Task remove")
@@ -27,5 +31,5 @@ export const TaskBaseExample = () => {
 				updateTodolist={updateTodolistCallback}
 				changeFilter={changeFilterCallback}
 			/>
-	</>
+		</>
 }
