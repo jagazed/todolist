@@ -27,7 +27,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "jest:integration": "jest -c integration/jest.config.js",
+    "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration"
   },
   "eslintConfig": {
     "extends": [
@@ -54,13 +56,17 @@
     "@storybook/addon-interactions": "^8.2.7",
     "@storybook/addon-links": "^8.2.7",
     "@storybook/addon-onboarding": "^8.2.7",
+    "@storybook/addon-storysource": "^8.2.7",
     "@storybook/blocks": "^8.2.7",
     "@storybook/preset-create-react-app": "^8.2.7",
     "@storybook/react": "^8.2.7",
     "@storybook/react-webpack5": "^8.2.7",
     "@storybook/test": "^8.2.7",
     "eslint-plugin-storybook": "^0.8.0",
+    "jest-image-snapshot": "^6.4.0",
     "prop-types": "15.8.1",
+    "puppeteer": "^22.15.0",
+    "start-server-and-test": "^2.0.5",
     "storybook": "^8.2.7",
     "webpack": "5.93.0"
   }

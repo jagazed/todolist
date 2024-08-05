@@ -9,6 +9,20 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
+    {
+      name: '@storybook/addon-storysource',
+      options: {
+        rule: {
+          test: [/\.stories\.jsx?$/],
+        },
+        loaderOptions: {
+          prettierConfig: {
+            printWidth: 80,
+            singleQuote: false
+          },
+        },
+      },
+    },
   ],
   framework: {
     name: "@storybook/react-webpack5",
