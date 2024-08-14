@@ -188,8 +188,8 @@ export const UpdateTask = () => {
             }}/>
             <input placeholder={"new title"} value={title} onChange={(e) => {setTitle(e.currentTarget.value)}}/>
             <input placeholder={"description"} value={description} onChange={(e) => {setDescription(e.currentTarget.value)}}/>
-            <input placeholder={"status"} value={status} type={"number"} onChange={(e) => {setStatus(e.currentTarget.value)}}/>
-            <input placeholder={"priority"} value={priority} type={"number"} onChange={(e) => {setPriority(e.currentTarget.value)}}/>
+            <input placeholder={"status"} value={status} type={"number"} onChange={(e) => {setStatus(+e.currentTarget.value)}}/>
+            <input placeholder={"priority"} value={priority} type={"number"} onChange={(e) => {setPriority(+e.currentTarget.value)}}/>
             <button onClick={updateTask}>update task</button>
         </div>
     </div>
