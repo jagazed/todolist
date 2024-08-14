@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios";
 import {todolistsApi} from "../api/todolists-api";
 
 export default {
@@ -156,8 +155,8 @@ export const UpdateTask = () => {
     const [description, setDescription] = useState<string>("")
     const [status, setStatus] = useState<number>(0)
     const [priority, setPriority] = useState<number>(0)
-    const [startDate, setStartDate] = useState<string>("")
-    const [deadline, setDeadline] = useState<string>("")
+    // const [startDate, setStartDate] = useState<string>("")
+    // const [deadline, setDeadline] = useState<string>("")
     const getDate = () => {
         const date = new Date();
         return date.toDateString();
