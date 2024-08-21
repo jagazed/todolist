@@ -1,4 +1,4 @@
-import {store} from '../state/store'
+import {store} from '../app/store'
 test('test', () => {
     const a = 1
     const b = 2
