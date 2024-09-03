@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,11 +8,11 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import {Menu} from '@mui/icons-material';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {LinearProgress} from "@mui/material";
+import {CircularProgress, LinearProgress} from "@mui/material";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
-import {RequestStatusType} from "./app-reducer";
+import {AppRootStateType, useAppDispatch} from "./store";
+import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {Outlet} from "react-router-dom";
 
 type PropsType = {
@@ -21,6 +21,17 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(initializedAppTC())
+    }, []);
+
+    if (!isInitialized) {
+        return <div style={{width: "100%", position: "fixed", top: "30%", textAlign: "center"}}><CircularProgress  /></div>
+    }
+
     return (
         <div className="App">
             <ErrorSnackbar />
