@@ -13,6 +13,7 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {Outlet} from "react-router-dom";
 
 type PropsType = {
     demo?: boolean
@@ -36,7 +37,8 @@ function App({demo = false}: PropsType) {
                 {status === 'loading' && <LinearProgress /> }
             </AppBar>
             <Container fixed>
-                <TodolistsList demo={demo} />
+                {/*<TodolistsList demo={demo} />*/}
+                <Outlet />
             </Container>
         </div>
     );
